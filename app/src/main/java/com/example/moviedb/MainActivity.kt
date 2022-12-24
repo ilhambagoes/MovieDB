@@ -1,5 +1,6 @@
 package com.example.moviedb
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.example.moviedb.model.MovieGenre
 import com.example.moviedb.model.MovieListModel
 import com.example.moviedb.model.ResultsItem
 import com.example.moviedb.presenter.MoviePresenterFactory
+import com.example.moviedb.view.discover.DiscoverActivity
 import com.example.moviedb.view.movie.MovieView
 import com.google.gson.Gson
 
@@ -38,7 +40,9 @@ class MainActivity : AppCompatActivity(), MovieView, MovieAdapter.OnItemListener
     }
 
     override fun onChipSelected(genre: MovieGenre) {
-        Log.d("DEVELOPER : ", Gson().toJson(genre))
+        startActivity(Intent(this@MainActivity, DiscoverActivity::class.java).apply {
+            putExtra(DiscoverActivity.DATA_GENRE, Gson().toJson(genre))
+        })
     }
 
     override fun onError(e: Throwable) {
