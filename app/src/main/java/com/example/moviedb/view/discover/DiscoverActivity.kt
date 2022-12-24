@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviedb.adapter.DiscoverAdapter
-import com.example.moviedb.databinding.ActivityMainBinding
+import com.example.moviedb.databinding.ActivityDiscoverBinding
 import com.example.moviedb.model.MovieGenre
 import com.example.moviedb.model.MovieListModel
 import com.example.moviedb.presenter.DiscoverPresenterFactory
@@ -13,7 +13,7 @@ import com.google.gson.Gson
 
 class DiscoverActivity : AppCompatActivity(), DiscoverView {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityDiscoverBinding
     private val presenter by lazy { DiscoverPresenterFactory.createDiscoverPresenter(this) }
     private var movieGenre: MovieGenre? = null
 
@@ -23,16 +23,17 @@ class DiscoverActivity : AppCompatActivity(), DiscoverView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityDiscoverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         movieGenre = Gson().fromJson(intent.getStringExtra(DATA_GENRE), MovieGenre::class.java)
-
+        val title = "Discover - " + movieGenre?.name
+        binding.tvTitleToolbar.text = title
         presenter.getMovieList(movieGenre?.id.toString())
     }
 
     override fun handleMovieList(movie: MovieListModel) {
-        binding.rvMovies.apply {
+        binding.rvDiscover.apply {
             layoutManager = GridLayoutManager(this@DiscoverActivity, 3)
             adapter = DiscoverAdapter(movie.results)
         }
