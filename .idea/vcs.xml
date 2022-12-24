@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/Master/mbanking-android-prod" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/MovieSubmit3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TASPEN/mbanking-android-prod" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Wording Selfie/mbanking-android-prod" vcs="Git" />
+  </component>
+</project>

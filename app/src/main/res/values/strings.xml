@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Movie DB</string>
+    <string name="label_image">image</string>
+    <string name="label_detail">Detail ></string>
+</resources>
