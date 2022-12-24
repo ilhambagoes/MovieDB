@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviedb.adapter.MovieAdapter
 import com.example.moviedb.databinding.ActivityMainBinding
+import com.example.moviedb.model.MovieGenre
 import com.example.moviedb.model.MovieListModel
+import com.example.moviedb.model.ResultsItem
 import com.example.moviedb.presenter.MoviePresenterFactory
 import com.example.moviedb.view.movie.MovieView
+import com.google.gson.Gson
 
-class MainActivity : AppCompatActivity(), MovieView {
+class MainActivity : AppCompatActivity(), MovieView, MovieAdapter.OnItemListener {
 
     private lateinit var binding: ActivityMainBinding
     private val presenter by lazy { MoviePresenterFactory.createMoviePresenter(this, this) }
@@ -26,8 +29,16 @@ class MainActivity : AppCompatActivity(), MovieView {
     override fun handleMovieList(movie: MovieListModel) {
         binding.rvMovies.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = MovieAdapter(movie.results)
+            adapter = MovieAdapter(movie.results, this@MainActivity)
         }
+    }
+
+    override fun onItemSelected(item: ResultsItem) {
+        Log.d("DEVELOPER : ", Gson().toJson(item))
+    }
+
+    override fun onChipSelected(genre: MovieGenre) {
+        Log.d("DEVELOPER : ", Gson().toJson(genre))
     }
 
     override fun onError(e: Throwable) {

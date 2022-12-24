@@ -1,7 +1,6 @@
 package com.example.moviedb.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -18,7 +17,10 @@ import com.example.moviedb.utils.Tools
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class MovieAdapter(private val movieList: List<ResultsItem>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>(){
+class MovieAdapter(
+    private val movieList: List<ResultsItem>,
+    private val listener: OnItemListener
+    ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>(){
 
     private var genreList: MutableList<MovieGenre> = arrayListOf()
 
@@ -50,6 +52,10 @@ class MovieAdapter(private val movieList: List<ResultsItem>) : RecyclerView.Adap
                     }
                 }
             }
+
+            itemView.setOnClickListener {
+                listener.onItemSelected(movie)
+            }
         }
     }
 
@@ -73,8 +79,17 @@ class MovieAdapter(private val movieList: List<ResultsItem>) : RecyclerView.Adap
             setChipBackgroundColorResource(R.color.teal_700)
             setTextColor(ContextCompat.getColor(context, R.color.white))
             setOnClickListener {
-                Log.d("DEVELOPER", text.toString())
+                genreList.forEach {
+                    if (it.name == text){
+                        listener.onChipSelected(MovieGenre(it.id, it.name))
+                    }
+                }
             }
         }
+    }
+
+    interface OnItemListener {
+        fun onItemSelected(item: ResultsItem)
+        fun onChipSelected(genre: MovieGenre)
     }
 }
